@@ -21,6 +21,7 @@ import {useGrpcMetadata, useParcaContext} from '@parca/components';
 import {saveAsBlob} from '@parca/functions';
 import {useEffect, useState} from 'react';
 import useUserPreference, {USER_PREFERENCES} from '@parca/functions/useUserPreference';
+import {FlamegraphContextProvider} from './contexts/FlamegraphContext';
 
 export type NavigateFunction = (path: string, queryParams: any) => void;
 
@@ -113,37 +114,39 @@ export const ProfileViewWithData = ({
   };
 
   return (
-    <ProfileView
-      flamegraphData={{
-        loading: flamegraphLoading,
-        data:
-          flamegraphResponse?.report.oneofKind === 'flamegraph'
-            ? flamegraphResponse?.report?.flamegraph
-            : undefined,
-        error: flamegraphError,
-      }}
-      topTableData={{
-        loading: topTableLoading,
-        data:
-          topTableResponse?.report.oneofKind === 'top' ? topTableResponse.report.top : undefined,
-        error: topTableError,
-      }}
-      callgraphData={{
-        loading: callgraphLoading,
-        data:
-          callgraphResponse?.report.oneofKind === 'callgraph'
-            ? callgraphResponse?.report?.callgraph
-            : undefined,
-        error: callgraphError,
-      }}
-      profileVisState={profileVisState}
-      sampleUnit={sampleUnit}
-      profileSource={profileSource}
-      queryClient={queryClient}
-      navigateTo={navigateTo}
-      onDownloadPProf={() => void downloadPProfClick()}
-      onFlamegraphContainerResize={onFlamegraphContainerResize}
-    />
+    <FlamegraphContextProvider>
+      <ProfileView
+        flamegraphData={{
+          loading: flamegraphLoading,
+          data:
+            flamegraphResponse?.report.oneofKind === 'flamegraph'
+              ? flamegraphResponse?.report?.flamegraph
+              : undefined,
+          error: flamegraphError,
+        }}
+        topTableData={{
+          loading: topTableLoading,
+          data:
+            topTableResponse?.report.oneofKind === 'top' ? topTableResponse.report.top : undefined,
+          error: topTableError,
+        }}
+        callgraphData={{
+          loading: callgraphLoading,
+          data:
+            callgraphResponse?.report.oneofKind === 'callgraph'
+              ? callgraphResponse?.report?.callgraph
+              : undefined,
+          error: callgraphError,
+        }}
+        profileVisState={profileVisState}
+        sampleUnit={sampleUnit}
+        profileSource={profileSource}
+        queryClient={queryClient}
+        navigateTo={navigateTo}
+        onDownloadPProf={() => void downloadPProfClick()}
+        onFlamegraphContainerResize={onFlamegraphContainerResize}
+      />
+    </FlamegraphContextProvider>
   );
 };
 

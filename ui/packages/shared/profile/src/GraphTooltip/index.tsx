@@ -20,6 +20,7 @@ import {getLastItem, valueFormatter} from '@parca/functions';
 import useIsShiftDown from '@parca/components/src/hooks/useIsShiftDown';
 import {hexifyAddress, truncateString} from '../';
 import {Function, Location, Mapping} from '@parca/client/dist/parca/metastore/v1alpha1/metastore';
+import {useFlamegraphContext} from '../contexts/FlamegraphContext';
 
 interface GraphTooltipProps {
   x: number;
@@ -30,10 +31,6 @@ interface GraphTooltipProps {
   contextElement: Element | null;
   isFixed?: boolean;
   virtualContextElement?: boolean;
-  strings?: string[];
-  mappings?: Mapping[];
-  locations?: Location[];
-  functions?: Function[];
 }
 
 const virtualElement = {
@@ -353,10 +350,6 @@ const GraphTooltip = ({
   contextElement,
   isFixed = false,
   virtualContextElement = true,
-  strings,
-  mappings,
-  locations,
-  functions,
 }: GraphTooltipProps): JSX.Element => {
   const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
 
@@ -387,6 +380,8 @@ const GraphTooltip = ({
   const update = popperProps.update;
   const isShiftDown = useIsShiftDown();
 
+  const {flamegraph} = useFlamegraphContext();
+
   useEffect(() => {
     if (contextElement != null) {
       if (isShiftDown) return;
@@ -407,10 +402,10 @@ const GraphTooltip = ({
         unit={unit}
         total={total}
         isFixed={isFixed}
-        strings={strings}
-        mappings={mappings}
-        locations={locations}
-        functions={functions}
+        strings={flamegraph?.stringTable}
+        mappings={flamegraph?.mapping}
+        locations={flamegraph?.locations}
+        functions={flamegraph?.function}
       />
     </div>
   );

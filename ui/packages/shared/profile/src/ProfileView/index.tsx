@@ -35,6 +35,7 @@ import ProfileIcicleGraph, {ResizeHandler} from '../ProfileIcicleGraph';
 import {ProfileSource} from '../ProfileSource';
 import TopTable from '../TopTable';
 import useDelayedLoader from '../useDelayedLoader';
+import {useFlamegraphContext} from '../contexts/FlamegraphContext';
 
 import '../ProfileView.styles.css';
 import useUserPreference, {USER_PREFERENCES} from '@parca/functions/useUserPreference';
@@ -131,6 +132,13 @@ export const ProfileView = ({
   );
 
   const {loader, perf} = useParcaContext();
+  const {setFlamegraph} = useFlamegraphContext();
+
+  useEffect(() => {
+    if (flamegraphData && flamegraphData.data) {
+      setFlamegraph(flamegraphData.data);
+    }
+  }, [flamegraphData]);
 
   useEffect(() => {
     // Reset the current path when the profile source changes
