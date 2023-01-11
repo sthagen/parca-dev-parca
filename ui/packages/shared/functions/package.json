@@ -1,10 +1,11 @@
 {
   "name": "@parca/functions",
-  "version": "0.16.55",
+  "version": "0.16.56",
   "description": "Templated shared functions",
   "main": "src/index.ts",
   "scripts": {
-    "test": "jest --coverage --config ../../../jest.config.js ./src/*"
+    "test": "jest --coverage --config ../../../jest.config.js ./src/*",
+    "watch": "tsc-watch"
   },
   "dependencies": {
     "@rehooks/local-storage": "^2.4.4"
