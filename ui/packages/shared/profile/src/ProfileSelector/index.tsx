@@ -70,7 +70,7 @@ export const useProfileTypes = (client: QueryServiceClient): IProfileTypesResult
     const call = client.profileTypes({}, {meta: metadata});
     call.response
       .then(response => setResult(response))
-      .catch(error => setError(error))
+      .catch((error: RpcError) => setError(error))
       .finally(() => setLoading(false));
   }, [client, metadata, loading]);
 

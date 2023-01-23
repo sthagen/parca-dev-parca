@@ -43,8 +43,9 @@ export const RowLabel = (meta: TopNodeMeta | undefined): string => {
       ? `[${getLastItem(meta.mapping.file) ?? ''}]`
       : ''
   }`;
-  if (meta.function?.name !== undefined && meta.function?.name !== '')
+  if (meta.function?.name !== undefined && meta.function?.name !== '') {
     return `${mapping} ${meta.function.name}`;
+  }
 
   const address = hexifyAddress(meta.location?.address);
   const fallback = `${mapping} ${address}`;

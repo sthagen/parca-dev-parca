@@ -1,10 +1,11 @@
 # Parse all files with TypeScript.
 extends:
-  - 'standard-with-typescript'
   - 'prettier'
-  - 'plugin:typescript-enum/recommended'
   - 'eslint:recommended'
+  - 'standard-with-typescript'
+  - 'plugin:typescript-enum/recommended'
   - 'plugin:@typescript-eslint/recommended'
+  - 'plugin:@typescript-eslint/recommended-requiring-type-checking'
   - 'plugin:react/recommended'
   - 'plugin:jest/recommended'
   - 'plugin:jest/style'

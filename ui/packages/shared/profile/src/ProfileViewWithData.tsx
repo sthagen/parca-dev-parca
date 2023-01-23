@@ -102,7 +102,7 @@ export const ProfileViewWithData = ({
 
     try {
       const blob = await downloadPprof(profileSource.QueryRequest(), queryClient, metadata);
-      saveAsBlob(blob, `profile.pb.gz`);
+      saveAsBlob(blob, 'profile.pb.gz');
     } catch (error) {
       console.error('Error while querying', error);
     }

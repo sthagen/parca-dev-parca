@@ -38,7 +38,7 @@ type NavigateFunction = (path: string, queryParams: any, options?: {replace?: bo
 export interface FlamegraphData {
   loading: boolean;
   data?: Flamegraph;
-  error?: any;
+  error?: Error;
 }
 
 export interface TopTableData {

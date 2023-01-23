@@ -51,7 +51,7 @@ export const useQueryRange = (
   const metadata = useGrpcMetadata();
 
   useEffect(() => {
-    void (async () => {
+    void (() => {
       setState({
         response: null,
         isLoading: true,
