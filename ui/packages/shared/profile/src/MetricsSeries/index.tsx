@@ -12,9 +12,10 @@
 // limitations under the License.
 
 import * as d3 from 'd3';
+import {Series} from '../MetricsGraph';
 
 interface MetricsSeriesProps {
-  data: any;
+  data: Series;
   line: d3.Line<[number, number]>;
   color: string;
   strokeWidth: string;

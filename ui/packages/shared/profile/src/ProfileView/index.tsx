@@ -19,6 +19,7 @@ import {getNewSpanColor, useURLState} from '@parca/functions';
 import {CloseIcon} from '@parca/icons';
 import {QueryServiceClient, Flamegraph, Top, Callgraph as CallgraphType} from '@parca/client';
 import {Button, Card, useParcaContext} from '@parca/components';
+import {RpcError} from '@protobuf-ts/runtime-rpc';
 import {useContainerDimensions} from '@parca/dynamicsize';
 import {useAppSelector, selectDarkMode} from '@parca/store';
 
@@ -38,7 +39,7 @@ type NavigateFunction = (path: string, queryParams: any, options?: {replace?: bo
 export interface FlamegraphData {
   loading: boolean;
   data?: Flamegraph;
-  error?: Error;
+  error?: RpcError | null;
 }
 
 export interface TopTableData {

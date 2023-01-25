@@ -70,7 +70,7 @@ export const useQueryRange = (
 
       call.response
         .then(response => setState({response, isLoading: false, error: null}))
-        .catch(error => setState({response: null, isLoading: false, error}));
+        .catch((error: RpcError) => setState({response: null, isLoading: false, error}));
     })();
   }, [client, queryExpression, start, end, metadata]);
 

@@ -50,7 +50,7 @@ interface HighlightedSeries {
   y: number;
 }
 
-interface Series {
+export interface Series {
   metric: Label[];
   values: number[][];
 }

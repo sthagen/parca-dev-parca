@@ -23,7 +23,7 @@ import {NavigateFunction} from '@parca/functions';
 
 interface ProfileExplorerProps {
   queryClient: QueryServiceClient;
-  queryParams: any;
+  queryParams: {[key: string]: string | string[] | number | number[] | undefined};
   navigateTo: NavigateFunction;
 }
 
@@ -134,7 +134,7 @@ const ProfileExplorerApp = ({
       to: parseInt(to_a as string),
       merge: (merge_a as string) === 'true',
       profile_name: profile_name_a as string,
-      timeSelection: time_selection_a as string,
+      timeSelection: time_selection_a,
     };
 
     const profile = ProfileSelectionFromParams(
@@ -227,7 +227,7 @@ const ProfileExplorerApp = ({
     from: parseInt(from_a as string),
     to: parseInt(to_a as string),
     merge: (merge_a as string) === 'true',
-    timeSelection: time_selection_a as string,
+    timeSelection: time_selection_a,
     profile_name: profile_name_a as string,
   };
   const queryB = {

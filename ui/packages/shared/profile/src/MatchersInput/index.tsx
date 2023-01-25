@@ -50,7 +50,7 @@ export const useLabelNames = (client: QueryServiceClient): UseLabelNames => {
 
     call.response
       .then(response => setResult({response}))
-      .catch(error => setResult({error}))
+      .catch((error: Error) => setResult({error}))
       .finally(() => setLoading(false));
   }, [client, metadata]);
 
@@ -103,7 +103,7 @@ const MatchersInput = ({
 
   const suggestionSections = useMemo(() => {
     const suggestionSections = new Suggestions();
-    Query.suggest(`${currentQuery.profileName()}{${value}`).forEach(function (s) {
+    Query.suggest(`${currentQuery.profileName()}{${value}`).forEach(function (s: Suggestion) {
       // Skip suggestions that we just completed. This really only works,
       // because we know the language is not repetitive. For a language that
       // has a repeating word, this would not work.
