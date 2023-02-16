@@ -14,6 +14,7 @@ repos:
         args:
           - --license-filepath=scripts/LICENSE.txt
           - --comment-style=//
+          - --use-current-year
           - --fuzzy-match-generates-todo
         exclude: \.pb(?:\.gw)?\.go$
         types: [go]
@@ -22,6 +23,7 @@ repos:
         args:
           - --license-filepath=scripts/LICENSE.txt
           - --comment-style=#
+          - --use-current-year
           - --fuzzy-match-generates-todo
         types: [shell]
       - id: insert-license
@@ -76,3 +78,6 @@ repos:
     hooks:
       - id: prettier
         files: \.(?:[jt]sx?|md|html|s?css)$
+        additional_dependencies:
+          - "prettier@2.8.3"
+          - "@ianvs/prettier-plugin-sort-imports@3.7.1"
