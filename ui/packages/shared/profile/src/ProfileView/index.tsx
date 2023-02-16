@@ -20,7 +20,7 @@ import {CloseIcon} from '@parca/icons';
 import {Icon} from '@iconify/react';
 import {QueryServiceClient, Flamegraph, Top, Callgraph as CallgraphType} from '@parca/client';
 import {Button, Card, useParcaContext, KeyDownProvider, useURLState} from '@parca/components';
-import {useContainerDimensions} from '@parca/dynamicsize';
+import {useContainerDimensions} from '@parca/hooks';
 import {useAppSelector, selectDarkMode} from '@parca/store';
 import {DragDropContext, Droppable, Draggable} from 'react-beautiful-dnd';
 import type {DropResult, DraggableLocation} from 'react-beautiful-dnd';

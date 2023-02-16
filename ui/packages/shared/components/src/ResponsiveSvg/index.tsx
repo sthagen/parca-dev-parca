@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import {useState, useEffect, Children} from 'react';
-import {useContainerDimensions} from '@parca/dynamicsize';
+import {useContainerDimensions} from '@parca/hooks';
 
 interface Props {
   children: JSX.Element;

@@ -12,7 +12,7 @@
 // limitations under the License.
 
 import {Flamegraph} from '@parca/client';
-import {useContainerDimensions} from '@parca/dynamicsize';
+import {useContainerDimensions} from '@parca/hooks';
 
 import DiffLegend from '../components/DiffLegend';
 import IcicleGraph from './IcicleGraph';

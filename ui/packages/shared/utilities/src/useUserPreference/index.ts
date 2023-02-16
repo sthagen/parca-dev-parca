@@ -15,14 +15,14 @@ import {useLocalStorage} from '@rehooks/local-storage';
 
 const USER_PREFERENCES_KEY = 'user-preferences';
 
-export interface UserPreferenceDetails {
+export interface Props {
   name: string;
   key: string;
   type: string;
   default: boolean | string;
 }
 
-export const USER_PREFERENCES: {[key: string]: UserPreferenceDetails} = {
+export const USER_PREFERENCES: {[key: string]: Props} = {
   HIGHTLIGHT_AFTER_FILTERING: {
     name: 'Highlight matching nodes after filtering',
     key: 'HIGHTLIGHT_AFTER_FILTERING',
