@@ -2,7 +2,7 @@
   "name": "@parca/hooks",
   "version": "0.16.61",
   "description": "A library containing React hooks used in the Parca UI",
-  "main": "dist/src/index.js",
+  "main": "src/index.tsx",
   "scripts": {
     "test": "jest --coverage --config ../../../jest.config.js ./src/*",
     "prepublish": "yarn build",
@@ -10,7 +10,8 @@
     "watch": "tsc-watch"
   },
   "dependencies": {
-    "@parca/client": "^0.16.63"
+    "@parca/client": "^0.16.63",
+    "@rehooks/local-storage": "^2.4.4"
   },
   "keywords": [],
   "author": "",

@@ -13,7 +13,7 @@
 
 import {Select, useURLState, type SelectElement} from '@parca/components';
 import type {NavigateFunction} from '@parca/functions';
-import useUIFeatureFlag from '@parca/functions/useUIFeatureFlag';
+import {useUIFeatureFlag} from '@parca/hooks';
 
 interface Props {
   position: number;

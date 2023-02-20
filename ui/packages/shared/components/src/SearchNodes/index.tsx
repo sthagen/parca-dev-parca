@@ -16,7 +16,7 @@ import {useEffect, useMemo} from 'react';
 import {debounce} from 'lodash';
 
 import type {NavigateFunction} from '@parca/functions';
-import useUIFeatureFlag from '@parca/functions/useUIFeatureFlag';
+import {useUIFeatureFlag} from '@parca/hooks';
 
 import {Input, useURLState} from '../';
 

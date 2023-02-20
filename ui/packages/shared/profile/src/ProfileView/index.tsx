@@ -26,8 +26,8 @@ import {
 
 import {Callgraph as CallgraphType, Flamegraph, QueryServiceClient, Top} from '@parca/client';
 import {Button, Card, KeyDownProvider, useParcaContext, useURLState} from '@parca/components';
-import {useContainerDimensions} from '@parca/dynamicsize';
 import {getNewSpanColor} from '@parca/functions';
+import {useContainerDimensions} from '@parca/hooks';
 import {CloseIcon} from '@parca/icons';
 import {selectDarkMode, useAppSelector} from '@parca/store';
 

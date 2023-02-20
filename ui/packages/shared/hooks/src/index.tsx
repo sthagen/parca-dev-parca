@@ -12,5 +12,13 @@
 // limitations under the License.
 
 import useContainerDimensions from './useContainerDimensions';
+import useUIFeatureFlag from './useUIFeatureFlag';
+import useUserPreference, {USER_PREFERENCES, type UserPreference} from './useUserPreference';
 
-export {useContainerDimensions};
+export {
+  useContainerDimensions,
+  useUIFeatureFlag,
+  useUserPreference,
+  USER_PREFERENCES,
+  UserPreference,
+};
