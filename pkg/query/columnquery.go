@@ -17,6 +17,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"runtime/pprof"
 	"strings"
 	"time"
 
@@ -120,6 +121,19 @@ func (q *ColumnQueryAPI) ProfileTypes(ctx context.Context, req *pb.ProfileTypesR
 
 // Query issues a instant query against the storage.
 func (q *ColumnQueryAPI) Query(ctx context.Context, req *pb.QueryRequest) (*pb.QueryResponse, error) {
+	var (
+		resp *pb.QueryResponse
+		err  error
+	)
+	pprof.Do(ctx, pprof.Labels("api", "query"), func(ctx context.Context) {
+		resp, err = q.query(ctx, req)
+	})
+
+	return resp, err
+}
+
+// Query issues a instant query against the storage.
+func (q *ColumnQueryAPI) query(ctx context.Context, req *pb.QueryRequest) (*pb.QueryResponse, error) {
 	if err := req.Validate(); err != nil {
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}

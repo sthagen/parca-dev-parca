@@ -30,6 +30,18 @@ func TestLabelsFromSample(t *testing.T) {
 		resultLabels    map[string]string
 		resultNumLabels map[string]int64
 	}{{
+		name:        "non_conflicting",
+		takenLabels: map[string]string{"job": "default"},
+		stringTable: []string{"", "foo", "bar"},
+		samples: []*pprofpb.Label{{
+			Key: 1,
+			Str: 2,
+		}},
+		resultLabels: map[string]string{
+			"foo": "bar",
+		},
+		resultNumLabels: map[string]int64{},
+	}, {
 		name: "descending order",
 		takenLabels: map[string]string{
 			"foo": "bar",
@@ -74,4 +86,23 @@ func TestLabelsFromSample(t *testing.T) {
 			require.Equal(t, c.resultNumLabels, numLabels)
 		})
 	}
+}
+
+func TestLabelNamesFromSamples(t *testing.T) {
+	takenLabels := map[string]string{"job": "default"}
+	stringTable := []string{"", "foo", "bar"}
+	samples := []*pprofpb.Sample{{
+		Label: []*pprofpb.Label{{
+			Key: 1,
+			Str: 2,
+		}},
+	}}
+	allLabels := map[string]struct{}{}
+	allNumLabels := map[string]struct{}{}
+
+	LabelNamesFromSamples(takenLabels, stringTable, samples, allLabels, allNumLabels)
+
+	require.Equal(t, map[string]struct{}{
+		"foo": {},
+	}, allLabels)
 }

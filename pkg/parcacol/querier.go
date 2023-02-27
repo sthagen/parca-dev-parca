@@ -102,7 +102,7 @@ func (q *Querier) Labels(
 				}
 
 				val := stringCol.Value(i)
-				seen[strings.TrimPrefix(val, "labels.")] = struct{}{}
+				seen[strings.TrimPrefix(val, ColumnLabels+".")] = struct{}{}
 			}
 
 			return nil
@@ -130,7 +130,7 @@ func (q *Querier) Values(
 	vals := []string{}
 
 	err := q.engine.ScanTable(q.tableName).
-		Distinct(logicalplan.Col("labels."+labelName)).
+		Distinct(logicalplan.Col(ColumnLabels+"."+labelName)).
 		Execute(ctx, func(ctx context.Context, ar arrow.Record) error {
 			if ar.NumCols() != 1 {
 				return fmt.Errorf("expected 1 column, got %d", ar.NumCols())
@@ -169,7 +169,7 @@ func (q *Querier) Values(
 }
 
 func MatcherToBooleanExpression(matcher *labels.Matcher) (logicalplan.Expr, error) {
-	ref := logicalplan.Col("labels." + matcher.Name)
+	ref := logicalplan.Col(ColumnLabels + "." + matcher.Name)
 	switch matcher.Type {
 	case labels.MatchEqual:
 		if matcher.Value == "" {
@@ -396,7 +396,7 @@ func (q *Querier) queryRangeDelta(ctx context.Context, filterExpr logicalplan.Ex
 			continue
 		}
 
-		if strings.HasPrefix(field.Name, "labels.") {
+		if strings.HasPrefix(field.Name, ColumnLabels+".") {
 			labelColumnIndices = append(labelColumnIndices, i)
 		}
 	}
@@ -432,7 +432,7 @@ func (q *Querier) queryRangeDelta(ctx context.Context, filterExpr logicalplan.Ex
 
 			v := col.Dictionary().(*array.Binary).Value(col.GetValueIndex(i))
 			if len(v) > 0 {
-				labelSet = append(labelSet, labels.Label{Name: strings.TrimPrefix(fields[labelColumnIndex].Name, "labels."), Value: string(v)})
+				labelSet = append(labelSet, labels.Label{Name: strings.TrimPrefix(fields[labelColumnIndex].Name, ColumnLabels+"."), Value: string(v)})
 			}
 		}
 
@@ -542,7 +542,7 @@ func (q *Querier) queryRangeNonDelta(ctx context.Context, filterExpr logicalplan
 			continue
 		}
 
-		if strings.HasPrefix(field.Name, "labels.") {
+		if strings.HasPrefix(field.Name, ColumnLabels+".") {
 			labelColumnIndices = append(labelColumnIndices, i)
 		}
 	}
@@ -569,7 +569,7 @@ func (q *Querier) queryRangeNonDelta(ctx context.Context, filterExpr logicalplan
 
 			v := StringValueFromDictionary(col, i)
 			if len(v) > 0 {
-				labelSet = append(labelSet, labels.Label{Name: strings.TrimPrefix(fields[labelColumnIndex].Name, "labels."), Value: v})
+				labelSet = append(labelSet, labels.Label{Name: strings.TrimPrefix(fields[labelColumnIndex].Name, ColumnLabels+"."), Value: v})
 			}
 		}
 

@@ -144,7 +144,7 @@ func LabelNamesFromSamples(
 		if _, ok := takenLabels[labelName]; ok {
 			resLabelName = "exported_" + resLabelName
 		}
-		if _, ok := resLabels[resLabelName]; !ok {
+		if _, ok := resLabels[resLabelName]; ok {
 			resLabelName = "exported_" + resLabelName
 		}
 		resLabels[resLabelName] = struct{}{}
