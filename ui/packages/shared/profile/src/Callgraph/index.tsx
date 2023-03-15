@@ -171,7 +171,7 @@ const Edge = ({
 
 const Callgraph = ({graph, sampleUnit, width, colorRange}: Props): JSX.Element => {
   const containerRef = useRef<HTMLDivElement>(null);
-  const [graphData, setGraphData] = useState<any>(null);
+  const [graphData, setGraphData] = useState<string | null>(null);
   const [hoveredNode, setHoveredNode] = useState<INode | null>(null);
   const [stage, setStage] = useState<{scale: {x: number; y: number}; x: number; y: number}>({
     scale: {x: 1, y: 1},

@@ -249,7 +249,7 @@ export const RawMetricsGraph = ({
   const metricPointRef = useRef(null);
   const isShiftDown = useIsShiftDown();
 
-  const time: number = parseFloat(profile?.HistoryParams().time);
+  const time: number = parseFloat(profile?.HistoryParams().time as string);
 
   if (width === undefined || width == null) {
     width = 0;

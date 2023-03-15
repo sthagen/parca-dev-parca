@@ -23,7 +23,7 @@ import {NavigateFunction} from '@parca/functions';
 
 interface ProfileExplorerProps {
   queryClient: QueryServiceClient;
-  queryParams: {[key: string]: string | string[] | number | number[] | undefined};
+  queryParams: {[key: string]: string | string[] | number};
   navigateTo: NavigateFunction;
 }
 

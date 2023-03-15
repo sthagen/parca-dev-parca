@@ -103,7 +103,7 @@ const MatchersInput = ({
 
   const suggestionSections = useMemo(() => {
     const suggestionSections = new Suggestions();
-    Query.suggest(`${currentQuery.profileName()}{${value}`).forEach(function (s: Suggestion) {
+    Query.suggest(`${currentQuery.profileName()}{${value}`).forEach(function (s) {
       // Skip suggestions that we just completed. This really only works,
       // because we know the language is not repetitive. For a language that
       // has a repeating word, this would not work.
