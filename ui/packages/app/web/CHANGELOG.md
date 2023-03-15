@@ -3,6 +3,308 @@
 All notable changes to this project will be documented in this file.
 See [Conventional Commits](https://conventionalcommits.org) for commit guidelines.
 
+## [0.16.244](https://github.com/parca-dev/parca/compare/@parca/web@0.16.243...@parca/web@0.16.244) (2023-03-15)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.243](https://github.com/parca-dev/parca/compare/@parca/web@0.16.242...@parca/web@0.16.243) (2023-03-14)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.242](https://github.com/parca-dev/parca/compare/@parca/web@0.16.241...@parca/web@0.16.242) (2023-03-14)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.241](https://github.com/parca-dev/parca/compare/@parca/web@0.16.240...@parca/web@0.16.241) (2023-03-14)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.240](https://github.com/parca-dev/parca/compare/@parca/web@0.16.239...@parca/web@0.16.240) (2023-03-14)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.239](https://github.com/parca-dev/parca/compare/@parca/web@0.16.238...@parca/web@0.16.239) (2023-03-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.238](https://github.com/parca-dev/parca/compare/@parca/web@0.16.237...@parca/web@0.16.238) (2023-03-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.237](https://github.com/parca-dev/parca/compare/@parca/web@0.16.236...@parca/web@0.16.237) (2023-03-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.236](https://github.com/parca-dev/parca/compare/@parca/web@0.16.235...@parca/web@0.16.236) (2023-03-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.235](https://github.com/parca-dev/parca/compare/@parca/web@0.16.234...@parca/web@0.16.235) (2023-03-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.234](https://github.com/parca-dev/parca/compare/@parca/web@0.16.233...@parca/web@0.16.234) (2023-03-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.233](https://github.com/parca-dev/parca/compare/@parca/web@0.16.232...@parca/web@0.16.233) (2023-03-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.232](https://github.com/parca-dev/parca/compare/@parca/web@0.16.231...@parca/web@0.16.232) (2023-03-06)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.231](https://github.com/parca-dev/parca/compare/@parca/web@0.16.230...@parca/web@0.16.231) (2023-03-06)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.230](https://github.com/parca-dev/parca/compare/@parca/web@0.16.229...@parca/web@0.16.230) (2023-03-04)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.229](https://github.com/parca-dev/parca/compare/@parca/web@0.16.228...@parca/web@0.16.229) (2023-03-04)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.228](https://github.com/parca-dev/parca/compare/@parca/web@0.16.227...@parca/web@0.16.228) (2023-03-04)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.227](https://github.com/parca-dev/parca/compare/@parca/web@0.16.226...@parca/web@0.16.227) (2023-03-04)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.226](https://github.com/parca-dev/parca/compare/@parca/web@0.16.225...@parca/web@0.16.226) (2023-03-02)
+
+**Note:** Version bump only for package @parca/web
+
+## 0.16.225 (2023-03-02)
+
+# 0.16.0 (2023-03-01)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.224](https://github.com/parca-dev/parca/compare/@parca/web@0.16.223...@parca/web@0.16.224) (2023-03-01)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.223](https://github.com/parca-dev/parca/compare/@parca/web@0.16.222...@parca/web@0.16.223) (2023-03-01)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.222](https://github.com/parca-dev/parca/compare/@parca/web@0.16.221...@parca/web@0.16.222) (2023-02-27)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.221](https://github.com/parca-dev/parca/compare/@parca/web@0.16.220...@parca/web@0.16.221) (2023-02-23)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.220](https://github.com/parca-dev/parca/compare/@parca/web@0.16.219...@parca/web@0.16.220) (2023-02-23)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.219](https://github.com/parca-dev/parca/compare/@parca/web@0.16.218...@parca/web@0.16.219) (2023-02-23)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.218](https://github.com/parca-dev/parca/compare/@parca/web@0.16.217...@parca/web@0.16.218) (2023-02-22)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.217](https://github.com/parca-dev/parca/compare/@parca/web@0.16.216...@parca/web@0.16.217) (2023-02-22)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.216](https://github.com/parca-dev/parca/compare/@parca/web@0.16.215...@parca/web@0.16.216) (2023-02-22)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.215](https://github.com/parca-dev/parca/compare/@parca/web@0.16.214...@parca/web@0.16.215) (2023-02-22)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.214](https://github.com/parca-dev/parca/compare/@parca/web@0.16.213...@parca/web@0.16.214) (2023-02-21)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.213](https://github.com/parca-dev/parca/compare/@parca/web@0.16.212...@parca/web@0.16.213) (2023-02-21)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.212](https://github.com/parca-dev/parca/compare/@parca/web@0.16.211...@parca/web@0.16.212) (2023-02-21)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.211](https://github.com/parca-dev/parca/compare/@parca/web@0.16.210...@parca/web@0.16.211) (2023-02-21)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.210](https://github.com/parca-dev/parca/compare/@parca/web@0.16.209...@parca/web@0.16.210) (2023-02-21)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.209](https://github.com/parca-dev/parca/compare/@parca/web@0.16.208...@parca/web@0.16.209) (2023-02-16)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.208](https://github.com/parca-dev/parca/compare/@parca/web@0.16.207...@parca/web@0.16.208) (2023-02-16)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.207](https://github.com/parca-dev/parca/compare/@parca/web@0.16.206...@parca/web@0.16.207) (2023-02-16)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.206](https://github.com/parca-dev/parca/compare/@parca/web@0.16.205...@parca/web@0.16.206) (2023-02-16)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.205](https://github.com/parca-dev/parca/compare/@parca/web@0.16.204...@parca/web@0.16.205) (2023-02-16)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.204](https://github.com/parca-dev/parca/compare/@parca/web@0.16.203...@parca/web@0.16.204) (2023-02-16)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.203](https://github.com/parca-dev/parca/compare/@parca/web@0.16.202...@parca/web@0.16.203) (2023-02-15)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.202](https://github.com/parca-dev/parca/compare/@parca/web@0.16.201...@parca/web@0.16.202) (2023-02-15)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.201](https://github.com/parca-dev/parca/compare/@parca/web@0.16.200...@parca/web@0.16.201) (2023-02-15)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.200](https://github.com/parca-dev/parca/compare/@parca/web@0.16.199...@parca/web@0.16.200) (2023-02-14)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.199](https://github.com/parca-dev/parca/compare/@parca/web@0.16.198...@parca/web@0.16.199) (2023-02-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.198](https://github.com/parca-dev/parca/compare/@parca/web@0.16.197...@parca/web@0.16.198) (2023-02-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.197](https://github.com/parca-dev/parca/compare/@parca/web@0.16.196...@parca/web@0.16.197) (2023-02-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.196](https://github.com/parca-dev/parca/compare/@parca/web@0.16.195...@parca/web@0.16.196) (2023-02-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.195](https://github.com/parca-dev/parca/compare/@parca/web@0.16.194...@parca/web@0.16.195) (2023-02-13)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.194](https://github.com/parca-dev/parca/compare/@parca/web@0.16.193...@parca/web@0.16.194) (2023-02-09)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.193](https://github.com/parca-dev/parca/compare/@parca/web@0.16.192...@parca/web@0.16.193) (2023-02-09)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.192](https://github.com/parca-dev/parca/compare/@parca/web@0.16.191...@parca/web@0.16.192) (2023-02-08)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.191](https://github.com/parca-dev/parca/compare/@parca/web@0.16.190...@parca/web@0.16.191) (2023-02-08)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.190](https://github.com/parca-dev/parca/compare/@parca/web@0.16.189...@parca/web@0.16.190) (2023-02-08)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.189](https://github.com/parca-dev/parca/compare/@parca/web@0.16.188...@parca/web@0.16.189) (2023-02-08)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.188](https://github.com/parca-dev/parca/compare/@parca/web@0.16.187...@parca/web@0.16.188) (2023-02-08)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.187](https://github.com/parca-dev/parca/compare/@parca/web@0.16.186...@parca/web@0.16.187) (2023-02-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.186](https://github.com/parca-dev/parca/compare/@parca/web@0.16.185...@parca/web@0.16.186) (2023-02-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.185](https://github.com/parca-dev/parca/compare/@parca/web@0.16.184...@parca/web@0.16.185) (2023-02-07)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.184](https://github.com/parca-dev/parca/compare/@parca/web@0.16.183...@parca/web@0.16.184) (2023-02-06)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.183](https://github.com/parca-dev/parca/compare/@parca/web@0.16.182...@parca/web@0.16.183) (2023-02-06)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.182](https://github.com/parca-dev/parca/compare/@parca/web@0.16.181...@parca/web@0.16.182) (2023-02-04)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.181](https://github.com/parca-dev/parca/compare/@parca/web@0.16.180...@parca/web@0.16.181) (2023-02-04)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.180](https://github.com/parca-dev/parca/compare/@parca/web@0.16.179...@parca/web@0.16.180) (2023-02-03)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.179](https://github.com/parca-dev/parca/compare/@parca/web@0.16.178...@parca/web@0.16.179) (2023-02-03)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.178](https://github.com/parca-dev/parca/compare/@parca/web@0.16.177...@parca/web@0.16.178) (2023-02-02)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.177](https://github.com/parca-dev/parca/compare/@parca/web@0.16.176...@parca/web@0.16.177) (2023-02-02)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.176](https://github.com/parca-dev/parca/compare/@parca/web@0.16.175...@parca/web@0.16.176) (2023-01-31)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.175](https://github.com/parca-dev/parca/compare/@parca/web@0.16.174...@parca/web@0.16.175) (2023-01-31)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.174](https://github.com/parca-dev/parca/compare/@parca/web@0.16.173...@parca/web@0.16.174) (2023-01-31)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.173](https://github.com/parca-dev/parca/compare/@parca/web@0.16.172...@parca/web@0.16.173) (2023-01-27)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.172](https://github.com/parca-dev/parca/compare/@parca/web@0.16.171...@parca/web@0.16.172) (2023-01-27)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.171](https://github.com/parca-dev/parca/compare/@parca/web@0.16.170...@parca/web@0.16.171) (2023-01-26)
+
+**Note:** Version bump only for package @parca/web
+
+## [0.16.170](https://github.com/parca-dev/parca/compare/@parca/web@0.16.169...@parca/web@0.16.170) (2023-01-26)
+
+**Note:** Version bump only for package @parca/web
+
 ## [0.16.169](https://github.com/parca-dev/parca/compare/@parca/web@0.16.168...@parca/web@0.16.169) (2023-01-25)
 
 **Note:** Version bump only for package @parca/web

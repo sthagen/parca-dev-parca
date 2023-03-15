@@ -13,6 +13,8 @@ extends:
   - 'plugin:import/recommended'
   - 'plugin:import/typescript'
   - 'prettier'
+  - 'plugin:promise/recommended'
+  - 'plugin:react-hooks/recommended'
 
 parser: '@typescript-eslint/parser'
 
@@ -72,3 +74,4 @@ rules:
   import/export: 2
 
   multiline-ternary: [error, always-multiline]
+  promise/catch-or-return: [error, {allowFinally: true}]

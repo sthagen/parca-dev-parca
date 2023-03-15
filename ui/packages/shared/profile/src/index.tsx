@@ -12,13 +12,15 @@
 // limitations under the License.
 
 import {lazy} from 'react';
+
+import {QueryServiceClient} from '@parca/client';
 import type {Props as CallgraphProps} from '@parca/profile/src/Callgraph';
+
 import ProfileExplorer from './ProfileExplorer';
 import ProfileTypeSelector from './ProfileTypeSelector';
 import type {FlamegraphData, TopTableData} from './ProfileView';
-import {QueryServiceClient} from '@parca/client';
 
-export * from './IcicleGraph';
+export * from './ProfileIcicleGraph/IcicleGraph';
 export * from './ProfileIcicleGraph';
 export * from './ProfileSource';
 export * from './ProfileView';

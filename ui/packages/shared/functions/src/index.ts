@@ -11,9 +11,14 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import format from 'date-fns/format';
+import colors from 'tailwindcss/colors';
+
 import {Label} from '@parca/client';
-export * from './hooks';
+
+import {unitsInTime} from './time';
+
+export * from './time';
+export * from './string';
 
 export type NavigateFunction = (
   path: string,
@@ -33,105 +38,6 @@ interface Unit {
   multiplier: number;
   symbol: string;
 }
-export interface TimeObject {
-  nanos?: number;
-  micros?: number;
-  milliseconds?: number;
-  seconds?: number;
-  minutes?: number;
-  hours?: number;
-  days?: number;
-  weeks?: number;
-  years?: number;
-}
-
-export const TimeUnits = {
-  Nanos: 'nanos',
-  Micros: 'micros',
-  Milliseconds: 'milliseconds',
-  Seconds: 'seconds',
-  Minutes: 'minutes',
-  Hours: 'hours',
-  Days: 'days',
-  Weeks: 'weeks',
-  Years: 'years',
-} as const;
-
-export type TimeUnit = typeof TimeUnits[keyof typeof TimeUnits];
-
-const unitsInTime = {
-  [TimeUnits.Nanos]: {multiplier: 1, symbol: 'ns'},
-  [TimeUnits.Micros]: {multiplier: 1e3, symbol: 'µs'},
-  [TimeUnits.Milliseconds]: {multiplier: 1e6, symbol: 'ms'},
-  [TimeUnits.Seconds]: {multiplier: 1e9, symbol: 's'},
-  [TimeUnits.Minutes]: {multiplier: 6 * 1e10, symbol: 'm'},
-  [TimeUnits.Hours]: {multiplier: 60 * 60 * 1e9, symbol: 'h'},
-  [TimeUnits.Days]: {multiplier: 60 * 60 * 24 * 1e9, symbol: 'd'},
-  [TimeUnits.Weeks]: {multiplier: 60 * 60 * 24 * 7 * 1e9, symbol: 'w'},
-  [TimeUnits.Years]: {multiplier: 60 * 60 * 24 * 365 * 1e9, symbol: 'y'},
-};
-
-export const convertTime = (value: number, from: TimeUnit, to: TimeUnit): number => {
-  const startUnit = unitsInTime[from];
-  const endUnit = unitsInTime[to];
-  if (startUnit === undefined || endUnit === undefined) {
-    console.error('invalid start or end unit provided');
-    return value;
-  }
-
-  return (value * startUnit.multiplier) / endUnit.multiplier;
-};
-
-export const formatDuration = (timeObject: TimeObject, to?: number): string => {
-  let values: string[] = [];
-  const unitsLargeToSmall = Object.values(TimeUnits).reverse();
-
-  let nanos = (Object.keys(timeObject) as Array<keyof TimeObject>)
-    .map(unit => {
-      const time = timeObject[unit];
-      return time !== undefined ? convertTime(time, unit as TimeUnit, TimeUnits.Nanos) : 0;
-    })
-    .reduce((prev, curr) => prev + curr, 0);
-
-  if (to !== undefined) {
-    nanos = to - nanos;
-  }
-
-  // for more than one second, just show up until whole seconds; otherwise, show whole micros
-  if (Math.floor(nanos / unitsInTime[TimeUnits.Seconds].multiplier) > 0) {
-    for (let i = 0; i < unitsLargeToSmall.length; i++) {
-      const multiplier = unitsInTime[unitsLargeToSmall[i]].multiplier;
-
-      if (nanos > multiplier) {
-        if (unitsLargeToSmall[i] === TimeUnits.Milliseconds) {
-          break;
-        } else {
-          const amount = Math.floor(nanos / multiplier);
-          values = [...values, `${amount}${unitsInTime[unitsLargeToSmall[i]].symbol}`];
-          nanos -= amount * multiplier;
-        }
-      }
-    }
-  } else {
-    const milliseconds = Math.floor(nanos / unitsInTime[TimeUnits.Milliseconds].multiplier);
-    if (milliseconds > 0) {
-      values = [`${milliseconds}${unitsInTime[TimeUnits.Milliseconds].symbol}`];
-    } else {
-      return '<1ms';
-    }
-  }
-
-  return values.join(' ');
-};
-
-export const formatDate = (date: number | Date, timeFormat: string): string => {
-  if (typeof date === 'number') {
-    date = new Date(date);
-  }
-
-  const ISOString = date.toISOString().slice(0, -1);
-  return format(new Date(ISOString), timeFormat);
-};
 
 const unitsInBytes = {
   bytes: {multiplier: 1, symbol: 'Bytes'},
@@ -221,6 +127,10 @@ export const parseParams = (querystring: string): Record<string, string | string
 };
 
 export const selectQueryParam = (key: string): string | string[] | undefined => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+
   const router = parseParams(window.location.search);
 
   if (key === 'dashboard_items') {
@@ -273,13 +183,79 @@ export function convertLocalToUTCDate(date: Date): Date {
   );
 }
 
-export const getNewSpanColor = (isDarkMode: boolean): string =>
-  isDarkMode ? '#B3BAE1' : '#929FEB';
+export type ColorProfileName = 'default' | 'subtle' | 'ocean' | 'warm' | 'rainbow';
+export type ColorsDuo = [string, string];
+
+export const COLOR_PROFILES: {[key in ColorProfileName]: {colors: ColorsDuo[]}} = {
+  default: {colors: [['#929FEB', '#B3BAE1']]},
+  subtle: {
+    colors: [
+      [colors.slate['200'], colors.slate['200']],
+      [colors.orange['200'], colors.orange['200']],
+      [colors.yellow['200'], colors.yellow['200']],
+      [colors.green['100'], colors.green['100']],
+      [colors.emerald['200'], colors.emerald['200']],
+      [colors.indigo['200'], colors.indigo['200']],
+      [colors.pink['200'], colors.pink['200']],
+    ],
+  },
+  ocean: {
+    colors: [
+      [colors.green['300'], colors.green['300']],
+      [colors.emerald['300'], colors.emerald['300']],
+      [colors.teal['300'], colors.teal['300']],
+      [colors.cyan['300'], colors.cyan['300']],
+      [colors.sky['300'], colors.sky['300']],
+      [colors.blue['300'], colors.blue['300']],
+      [colors.indigo['300'], colors.indigo['300']],
+      [colors.violet['300'], colors.violet['300']],
+      [colors.purple['300'], colors.purple['300']],
+    ],
+  },
+  warm: {
+    colors: [
+      [colors.red['300'], colors.red['300']],
+      [colors.orange['300'], colors.orange['300']],
+      [colors.amber['300'], colors.amber['300']],
+      [colors.yellow['300'], colors.yellow['300']],
+      [colors.lime['300'], colors.lime['300']],
+      [colors.green['300'], colors.green['300']],
+      [colors.emerald['300'], colors.emerald['300']],
+    ],
+  },
+  rainbow: {
+    colors: [
+      [colors.red['300'], colors.red['300']],
+      [colors.orange['300'], colors.orange['300']],
+      [colors.amber['300'], colors.amber['300']],
+      [colors.yellow['300'], colors.yellow['300']],
+      [colors.lime['300'], colors.lime['300']],
+      [colors.green['300'], colors.green['300']],
+      [colors.emerald['300'], colors.emerald['300']],
+      [colors.teal['300'], colors.teal['300']],
+      [colors.cyan['300'], colors.cyan['300']],
+      [colors.sky['300'], colors.sky['300']],
+      [colors.blue['300'], colors.blue['300']],
+      [colors.indigo['300'], colors.indigo['300']],
+      [colors.violet['300'], colors.violet['300']],
+      [colors.purple['300'], colors.purple['300']],
+      [colors.fuchsia['300'], colors.fuchsia['300']],
+      [colors.pink['300'], colors.pink['300']],
+      [colors.rose['300'], colors.rose['300']],
+    ],
+  },
+};
+
+export const getNewSpanColor = (isDarkMode: boolean): string => {
+  return isDarkMode ? '#B3BAE1' : '#929FEB';
+};
+
 export const getIncreasedSpanColor = (transparency: number, isDarkMode: boolean): string => {
   return isDarkMode
     ? `rgba(255, 177, 204, ${transparency})`
     : `rgba(254, 153, 187, ${transparency})`;
 };
+
 export const getReducedSpanColor = (transparency: number, isDarkMode: boolean): string => {
   return isDarkMode
     ? `rgba(103, 158, 92, ${transparency})`
@@ -297,7 +273,8 @@ export const diffColor = (diff: number, cumulative: number, isDarkMode: boolean)
   const increasedSpanColor = getIncreasedSpanColor(diffTransparency, isDarkMode);
   const reducedSpanColor = getReducedSpanColor(diffTransparency, isDarkMode);
 
-  const color = diff === 0 ? newSpanColor : diff > 0 ? increasedSpanColor : reducedSpanColor;
+  const color: string =
+    diff === 0 ? newSpanColor : diff > 0 ? increasedSpanColor : reducedSpanColor;
 
   return color;
 };

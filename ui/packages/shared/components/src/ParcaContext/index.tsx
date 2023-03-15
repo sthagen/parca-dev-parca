@@ -11,13 +11,16 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {createContext, ReactNode, useContext, ProfilerOnRenderCallback} from 'react';
+import {ProfilerOnRenderCallback, ReactNode, createContext, useContext} from 'react';
+
 import {RpcError} from '@protobuf-ts/runtime-rpc';
 
+import {NoDataPrompt} from '../NoDataPrompt';
 import Spinner from '../Spinner';
 
 interface Props {
   loader: ReactNode;
+  noDataPrompt: ReactNode;
   perf?: {
     onRender?: ProfilerOnRenderCallback;
     markInteraction: (interactionName: string, sampleCount: number | string) => void;
@@ -27,6 +30,7 @@ interface Props {
 
 export const defaultValue: Props = {
   loader: <Spinner />,
+  noDataPrompt: <NoDataPrompt />,
   perf: {
     onRender: () => {},
     markInteraction: () => {},

@@ -11,26 +11,29 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {configureStore, combineReducers} from '@reduxjs/toolkit';
-import uiReducer, {UiState} from './slices/uiSlice';
-import profileReducer, {ProfileState} from './slices/profileSlice';
-import storage from 'redux-persist/lib/storage';
+import {combineReducers, configureStore} from '@reduxjs/toolkit';
+import type {Store} from 'redux';
 import {
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
   PURGE,
   REGISTER,
+  REHYDRATE,
+  persistReducer,
   persistStore,
+  type Persistor,
 } from 'redux-persist';
-import type {Persistor} from 'redux-persist';
-import type {Store} from 'redux';
+import storage from 'redux-persist/lib/storage';
+
+import colorsReducer from './slices/colorsSlice';
+import profileReducer from './slices/profileSlice';
+import uiReducer from './slices/uiSlice';
 
 const rootReducer = combineReducers({
   ui: uiReducer,
   profile: profileReducer,
+  colors: colorsReducer,
 });
 
 const slicesToPersist = ['ui'];
@@ -65,6 +68,8 @@ const defaultExports = (): {store: Store; persistor: Persistor} => {
   return {store, persistor};
 };
 
-export type {ProfileState, UiState};
+export * from './slices/uiSlice';
+export * from './slices/profileSlice';
+export * from './slices/colorsSlice';
 
 export default defaultExports;

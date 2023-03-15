@@ -11,12 +11,19 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {flexRender, getCoreRowModel, getSortedRowModel, useReactTable} from '@tanstack/react-table';
-import type {ColumnDef, SortingState} from '@tanstack/react-table';
+import {useCallback, useRef, useState} from 'react';
+
+import {Icon} from '@iconify/react';
+import {
+  flexRender,
+  getCoreRowModel,
+  getSortedRowModel,
+  useReactTable,
+  type ColumnDef,
+  type SortingState,
+} from '@tanstack/react-table';
 import cx from 'classnames';
 import {useVirtual} from 'react-virtual';
-import {useCallback, useRef, useState} from 'react';
-import {Icon} from '@iconify/react';
 
 declare module '@tanstack/table-core' {
   // @ts-expect-error
@@ -32,6 +39,7 @@ interface Props<TData> {
   onRowClick?: (row: TData) => void;
   enableHighlighting?: boolean;
   shouldHighlightRow?: (row: TData) => boolean;
+  usePointerCursor?: boolean;
 }
 
 const Table = <T,>({
@@ -40,6 +48,7 @@ const Table = <T,>({
   initialSorting = [],
   onRowClick,
   enableHighlighting = false,
+  usePointerCursor = true,
   shouldHighlightRow,
 }: Props<T>): JSX.Element => {
   const [sorting, setSorting] = useState<SortingState>(initialSorting);
@@ -136,7 +145,10 @@ const Table = <T,>({
             return (
               <tr
                 key={row.id}
-                className="hover:bg-[#62626212] dark:hover:bg-[#ffffff12] cursor-pointer"
+                className={cx(
+                  usePointerCursor ? 'cursor-pointer' : 'cursor-auto',
+                  'hover:bg-[#62626212] dark:hover:bg-[#ffffff12]'
+                )}
                 onClick={onRowClick != null ? () => onRowClick(row.original) : undefined}
                 style={
                   !enableHighlighting || shouldHighlightRow === undefined

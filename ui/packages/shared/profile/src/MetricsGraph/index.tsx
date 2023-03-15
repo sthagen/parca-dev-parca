@@ -11,29 +11,32 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
+
 import * as d3 from 'd3';
 import {pointer} from 'd3-selection';
-import {formatForTimespan} from '@parca/functions/time';
-import {SingleProfileSelection, timeFormat} from '..';
-import {cutToMaxStringLength} from '@parca/functions/string';
 import throttle from 'lodash.throttle';
-import {MetricsSeries as MetricsSeriesPb, MetricsSample, Label} from '@parca/client';
-import {usePopper} from 'react-popper';
-import type {VirtualElement} from '@popperjs/core';
-import {valueFormatter, formatDate, sanitizeHighlightedValues} from '@parca/functions';
-import {DateTimeRange} from '@parca/components';
+
+import {Label, MetricsSample, MetricsSeries as MetricsSeriesPb} from '@parca/client';
+import {DateTimeRange, useKeyDown} from '@parca/components';
 import {useContainerDimensions} from '@parca/dynamicsize';
-import useIsShiftDown from '@parca/components/src/hooks/useIsShiftDown';
+import {
+  formatDate,
+  formatForTimespan,
+  sanitizeHighlightedValues,
+  valueFormatter,
+} from '@parca/functions';
 
-import MetricsSeries from '../MetricsSeries';
+import {MergedProfileSelection} from '..';
 import MetricsCircle from '../MetricsCircle';
+import MetricsSeries from '../MetricsSeries';
+import MetricsTooltip from './MetricsTooltip';
 
-interface RawMetricsGraphProps {
+interface Props {
   data: MetricsSeriesPb[];
   from: number;
   to: number;
-  profile: SingleProfileSelection | null;
+  profile: MergedProfileSelection | null;
   onSampleClick: (timestamp: number, value: number, labels: Label[]) => void;
   onLabelClick: (labelName: string, labelValue: string) => void;
   setTimeRange: (range: DateTimeRange) => void;
@@ -41,11 +44,12 @@ interface RawMetricsGraphProps {
   width?: number;
 }
 
-interface HighlightedSeries {
+export interface HighlightedSeries {
   seriesIndex: number;
   labels: Label[];
   timestamp: number;
   value: number;
+  valuePerSecond: number;
   x: number;
   y: number;
 }
@@ -64,7 +68,7 @@ const MetricsGraph = ({
   onLabelClick,
   setTimeRange,
   sampleUnit,
-}: RawMetricsGraphProps): JSX.Element => {
+}: Props): JSX.Element => {
   const {ref, dimensions} = useContainerDimensions();
 
   return (
@@ -96,140 +100,6 @@ export const parseValue = (value: string): number | null => {
 const lineStroke = '1px';
 const lineStrokeHover = '2px';
 
-interface MetricsTooltipProps {
-  x: number;
-  y: number;
-  highlighted: HighlightedSeries;
-  onLabelClick: (labelName: string, labelValue: string) => void;
-  contextElement: Element | null;
-  sampleUnit: string;
-}
-
-function generateGetBoundingClientRect(contextElement: Element, x = 0, y = 0): () => DOMRect {
-  const domRect = contextElement.getBoundingClientRect();
-  return () =>
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    ({
-      width: 0,
-      height: 0,
-      top: domRect.y + y,
-      left: domRect.x + x,
-      right: domRect.x + x,
-      bottom: domRect.y + y,
-    } as DOMRect);
-}
-
-const virtualElement: VirtualElement = {
-  getBoundingClientRect: () => {
-    // eslint-disable-next-line @typescript-eslint/consistent-type-assertions
-    return {
-      width: 0,
-      height: 0,
-      top: 0,
-      left: 0,
-      right: 0,
-      bottom: 0,
-    } as DOMRect;
-  },
-};
-
-export const MetricsTooltip = ({
-  x,
-  y,
-  highlighted,
-  onLabelClick,
-  contextElement,
-  sampleUnit,
-}: MetricsTooltipProps): JSX.Element => {
-  const [popperElement, setPopperElement] = useState<HTMLDivElement | null>(null);
-
-  const {styles, attributes, ...popperProps} = usePopper(virtualElement, popperElement, {
-    placement: 'auto-start',
-    strategy: 'absolute',
-    modifiers: [
-      {
-        name: 'preventOverflow',
-        options: {
-          tether: false,
-          altAxis: true,
-        },
-      },
-      {
-        name: 'offset',
-        options: {
-          offset: [30, 30],
-        },
-      },
-    ],
-  });
-
-  const update = popperProps.update;
-
-  useEffect(() => {
-    if (contextElement != null) {
-      virtualElement.getBoundingClientRect = generateGetBoundingClientRect(contextElement, x, y);
-      void update?.();
-    }
-  }, [x, y, contextElement, update]);
-
-  const nameLabel: Label | undefined = highlighted?.labels.find(e => e.name === '__name__');
-  const highlightedNameLabel: Label = nameLabel !== undefined ? nameLabel : {name: '', value: ''};
-
-  return (
-    <div ref={setPopperElement} style={styles.popper} {...attributes.popper} className="z-10">
-      <div className="flex max-w-md">
-        <div className="m-auto">
-          <div
-            className="border-gray-300 dark:border-gray-500 bg-gray-50 dark:bg-gray-900 rounded-lg p-3 shadow-lg opacity-90"
-            style={{borderWidth: 1}}
-          >
-            <div className="flex flex-row">
-              <div className="ml-2 mr-6">
-                <span className="font-semibold">{highlightedNameLabel.value}</span>
-                <span className="block text-gray-700 dark:text-gray-300 my-2">
-                  <table className="table-auto">
-                    <tbody>
-                      <tr>
-                        <td className="w-1/4">Value</td>
-                        <td className="w-3/4">
-                          {valueFormatter(highlighted.value, sampleUnit, 1)}
-                        </td>
-                      </tr>
-                      <tr>
-                        <td className="w-1/4">At</td>
-                        <td className="w-3/4">{formatDate(highlighted.timestamp, timeFormat)}</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </span>
-                <span className="block text-gray-500 my-2">
-                  {highlighted.labels
-                    .filter((label: Label) => label.name !== '__name__')
-                    .map(function (label: Label) {
-                      return (
-                        <button
-                          key={label.name}
-                          type="button"
-                          className="inline-block rounded-lg text-gray-700 bg-gray-200 dark:bg-gray-700 dark:text-gray-400 px-2 py-1 text-xs font-bold mr-3"
-                          onClick={() => onLabelClick(label.name, label.value)}
-                        >
-                          {cutToMaxStringLength(`${label.name}="${label.value}"`, 37)}
-                        </button>
-                      );
-                    })}
-                </span>
-                <span className="block text-gray-500 text-xs">
-                  Hold shift and click label to add to query.
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
-};
-
 export const RawMetricsGraph = ({
   data,
   from,
@@ -240,16 +110,17 @@ export const RawMetricsGraph = ({
   setTimeRange,
   width,
   sampleUnit,
-}: RawMetricsGraphProps): JSX.Element => {
+}: Props): JSX.Element => {
   const graph = useRef(null);
   const [dragging, setDragging] = useState(false);
   const [hovering, setHovering] = useState(false);
   const [relPos, setRelPos] = useState(-1);
   const [pos, setPos] = useState([0, 0]);
   const metricPointRef = useRef(null);
-  const isShiftDown = useIsShiftDown();
+  const {isShiftDown} = useKeyDown();
 
-  const time: number = parseFloat(profile?.HistoryParams().time as string);
+  // the time of the selected point is the start of the merge window
+  const time: number = parseFloat(profile?.HistoryParams().merge_from);
 
   if (width === undefined || width == null) {
     width = 0;
@@ -264,9 +135,9 @@ export const RawMetricsGraph = ({
       agg.push({
         metric: s.labelset.labels,
         values: s.samples.reduce<number[][]>(function (agg: number[][], d: MetricsSample) {
-          if (d.timestamp !== undefined && d.value !== undefined) {
+          if (d.timestamp !== undefined && d.valuePerSecond !== undefined) {
             const t = (+d.timestamp.seconds * 1e9 + d.timestamp.nanos) / 1e6; // https://github.com/microsoft/TypeScript/issues/5710#issuecomment-157886246
-            agg.push([t, parseFloat(d.value)]);
+            agg.push([t, d.valuePerSecond, parseFloat(d.value)]);
           }
           return agg;
         }, []),
@@ -332,7 +203,8 @@ export const RawMetricsGraph = ({
       seriesIndex: closestSeriesIndex,
       labels: series[closestSeriesIndex].metric,
       timestamp: point[0],
-      value: point[1],
+      valuePerSecond: point[1],
+      value: point[2],
       x: xScale(point[0]),
       y: yScale(point[1]),
     };
@@ -425,14 +297,14 @@ export const RawMetricsGraph = ({
     let seriesIndex = -1;
 
     outer: for (let i = 0; i < series.length; i++) {
-      const keys = profile.labels.map(e => e.name);
+      const keys = profile.query.matchers.map(e => e.key);
       for (let j = 0; j < keys.length; j++) {
-        const labelName = keys[j];
-        const label = series[i].metric.find(e => e.name === labelName);
+        const matcherKey = keys[j];
+        const label = series[i].metric.find(e => e.name === matcherKey);
         if (label === undefined) {
           continue outer; // label doesn't exist to begin with
         }
-        if (profile.labels[j].value !== label.value) {
+        if (profile.query.matchers[j].value !== label.value) {
           continue outer; // label values don't match
         }
       }
@@ -455,14 +327,14 @@ export const RawMetricsGraph = ({
       labels: [],
       seriesIndex,
       timestamp: sample[0],
-      value: sample[1],
+      valuePerSecond: sample[1],
+      value: sample[2],
       x: xScale(sample[0]),
       y: yScale(sample[1]),
     };
   };
 
   const selected = findSelectedProfile();
-
   return (
     <>
       {highlighted != null && hovering && !dragging && pos[0] !== 0 && pos[1] !== 0 && (

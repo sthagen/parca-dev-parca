@@ -12,10 +12,12 @@
 // limitations under the License.
 
 import {useEffect, useState} from 'react';
-import {useCookie} from 'react-use';
+
 import cx from 'classnames';
 import ReactMarkdown from 'react-markdown';
-import {Modal, Button} from '@parca/components';
+import {useCookie} from 'react-use';
+
+import {Button, Modal} from '@parca/components';
 
 interface Props {
   version: string;
@@ -34,7 +36,7 @@ const ReleaseNotesViewer = ({version}: Props) => {
         return;
       }
       const release = await fetch(
-        `https://api.github.com/repos/parca-dev/parca/releases/tags/${version}`
+        `https://api.github.com/repos/parca-dev/parca/releases/tags/v${version}`
       ).then(res => res.json());
       setReleaseNotes(
         `Here's the list of changes in this release:\n${release.body

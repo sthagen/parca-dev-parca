@@ -11,12 +11,31 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import {useEffect, useState} from 'react';
+import {ReactNode, createContext, useContext, useEffect, useMemo, useState} from 'react';
 
-const useIsShiftDown = (): boolean => {
-  const [isShiftDown, setIsShiftDown] = useState(false);
+export interface KeyDownState {
+  isShiftDown: boolean;
+}
+
+const DEFAULT_VALUE = {
+  isShiftDown: false,
+};
+
+const KeyDownContext = createContext<KeyDownState>(DEFAULT_VALUE);
+
+export const KeyDownProvider = ({
+  children,
+}: {
+  children: ReactNode;
+  value?: KeyDownState;
+}): JSX.Element => {
+  const [isShiftDown, setIsShiftDown] = useState<boolean>(false);
 
   useEffect(() => {
+    if (typeof window === 'undefined') {
+      return;
+    }
+
     const handleShiftDown = (event: {keyCode: number}): void => {
       if (event.keyCode === 16) {
         setIsShiftDown(true);
@@ -39,7 +58,17 @@ const useIsShiftDown = (): boolean => {
     };
   }, []);
 
-  return isShiftDown;
+  const value = useMemo(() => ({isShiftDown}), [isShiftDown]);
+
+  return <KeyDownContext.Provider value={value}>{children}</KeyDownContext.Provider>;
 };
 
-export default useIsShiftDown;
+export const useKeyDown = (): KeyDownState => {
+  const context = useContext(KeyDownContext);
+  if (context == null) {
+    return DEFAULT_VALUE;
+  }
+  return context;
+};
+
+export default KeyDownContext;

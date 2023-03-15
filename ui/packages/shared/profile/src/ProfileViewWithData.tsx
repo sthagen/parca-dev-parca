@@ -12,14 +12,16 @@
 // limitations under the License.
 
 import {useEffect, useState} from 'react';
-import {QueryServiceClient, QueryRequest_ReportType} from '@parca/client';
-import {useQuery} from './useQuery';
-import {ProfileView} from './ProfileView';
-import {ProfileSource} from './ProfileSource';
-import {downloadPprof} from './utils';
-import {useGrpcMetadata, useParcaContext} from '@parca/components';
-import {saveAsBlob, NavigateFunction, useURLState} from '@parca/functions';
+
+import {QueryRequest_ReportType, QueryServiceClient} from '@parca/client';
+import {useGrpcMetadata, useParcaContext, useURLState} from '@parca/components';
+import {saveAsBlob, type NavigateFunction} from '@parca/functions';
 import useUserPreference, {USER_PREFERENCES} from '@parca/functions/useUserPreference';
+
+import {ProfileSource} from './ProfileSource';
+import {ProfileView} from './ProfileView';
+import {useQuery} from './useQuery';
+import {downloadPprof} from './utils';
 
 interface ProfileViewWithDataProps {
   queryClient: QueryServiceClient;

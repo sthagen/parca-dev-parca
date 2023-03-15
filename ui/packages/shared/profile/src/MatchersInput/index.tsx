@@ -11,14 +11,15 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-import React, {useState, useEffect, useMemo, useRef} from 'react';
-import TextareaAutosize from 'react-textarea-autosize';
-import cx from 'classnames';
+import React, {useEffect, useMemo, useRef, useState} from 'react';
 
+import cx from 'classnames';
+import TextareaAutosize from 'react-textarea-autosize';
+
+import {LabelsResponse, QueryServiceClient} from '@parca/client';
 import {useGrpcMetadata} from '@parca/components';
 import {sanitizeLabelValue} from '@parca/functions';
 import {Query} from '@parca/parser';
-import {LabelsResponse, QueryServiceClient} from '@parca/client';
 
 import SuggestionsList, {Suggestion, Suggestions} from './SuggestionsList';
 
@@ -84,7 +85,7 @@ const MatchersInput = ({
           // replace single `\` in the `labelValues` string with doubles `\\` if available.
           const newValues = sanitizeLabelValue(response.labelValues);
 
-          setLabelValues(newValues);
+          return setLabelValues(newValues);
         })
         .catch(() => setLabelValues(null))
         .finally(() => setLabelValuesLoading(false));

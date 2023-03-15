@@ -1,4 +1,4 @@
-// Copyright 2022 The Parca Authors
+// Copyright 2022-2023 The Parca Authors
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -35,7 +35,7 @@ import (
 type Querier interface {
 	Labels(ctx context.Context, match []string, start, end time.Time) ([]string, error)
 	Values(ctx context.Context, labelName string, match []string, start, end time.Time) ([]string, error)
-	QueryRange(ctx context.Context, query string, startTime, endTime time.Time, limit uint32) ([]*pb.MetricsSeries, error)
+	QueryRange(ctx context.Context, query string, startTime, endTime time.Time, step time.Duration, limit uint32) ([]*pb.MetricsSeries, error)
 	ProfileTypes(ctx context.Context) ([]*pb.ProfileType, error)
 	QuerySingle(ctx context.Context, query string, time time.Time) (*profile.Profile, error)
 	QueryMerge(ctx context.Context, query string, start, end time.Time) (*profile.Profile, error)
@@ -96,7 +96,7 @@ func (q *ColumnQueryAPI) QueryRange(ctx context.Context, req *pb.QueryRangeReque
 		return nil, status.Error(codes.InvalidArgument, err.Error())
 	}
 
-	res, err := q.querier.QueryRange(ctx, req.Query, req.Start.AsTime(), req.End.AsTime(), req.Limit)
+	res, err := q.querier.QueryRange(ctx, req.Query, req.Start.AsTime(), req.End.AsTime(), req.Step.AsDuration(), req.Limit)
 	if err != nil {
 		return nil, err
 	}
@@ -144,11 +144,13 @@ func (q *ColumnQueryAPI) Query(ctx context.Context, req *pb.QueryRequest) (*pb.Q
 		return nil, err
 	}
 
-	if req.FilterQuery != nil {
-		p = q.filterProfileData(ctx, p, *req.FilterQuery)
-	}
-
-	return q.renderReport(ctx, p, req.GetReportType(), req.GetNodeTrimThreshold())
+	return q.renderReport(
+		ctx,
+		p,
+		req.GetReportType(),
+		req.GetNodeTrimThreshold(),
+		req.FilterQuery,
+	)
 }
 
 func keepSample(s *profile.SymbolizedSample, filterQuery string) bool {
@@ -162,8 +164,13 @@ func keepSample(s *profile.SymbolizedSample, filterQuery string) bool {
 	return false
 }
 
-func (q *ColumnQueryAPI) filterProfileData(ctx context.Context, p *profile.Profile, filterQuery string) *profile.Profile {
-	_, span := q.tracer.Start(ctx, "filterByFunction")
+func filterProfileData(
+	ctx context.Context,
+	tracer trace.Tracer,
+	p *profile.Profile,
+	filterQuery string,
+) *profile.Profile {
+	_, span := tracer.Start(ctx, "filterByFunction")
 	defer span.End()
 	filteredSamples := []*profile.SymbolizedSample{}
 	for _, s := range p.Samples {
@@ -177,10 +184,31 @@ func (q *ColumnQueryAPI) filterProfileData(ctx context.Context, p *profile.Profi
 	}
 }
 
-func (q *ColumnQueryAPI) renderReport(ctx context.Context, p *profile.Profile, typ pb.QueryRequest_ReportType, nodeTrimThreshold float32) (*pb.QueryResponse, error) {
-	ctx, span := q.tracer.Start(ctx, "renderReport")
+func (q *ColumnQueryAPI) renderReport(
+	ctx context.Context,
+	p *profile.Profile,
+	typ pb.QueryRequest_ReportType,
+	nodeTrimThreshold float32,
+	filterQuery *string,
+) (*pb.QueryResponse, error) {
+	return RenderReport(ctx, q.tracer, p, typ, nodeTrimThreshold, filterQuery)
+}
+
+func RenderReport(
+	ctx context.Context,
+	tracer trace.Tracer,
+	p *profile.Profile,
+	typ pb.QueryRequest_ReportType,
+	nodeTrimThreshold float32,
+	filterQuery *string,
+) (*pb.QueryResponse, error) {
+	ctx, span := tracer.Start(ctx, "renderReport")
 	span.SetAttributes(attribute.String("reportType", typ.String()))
 	defer span.End()
+
+	if filterQuery != nil {
+		p = filterProfileData(ctx, tracer, p, *filterQuery)
+	}
 
 	nodeTrimFraction := float32(0)
 	if nodeTrimThreshold != 0 {
@@ -190,7 +218,7 @@ func (q *ColumnQueryAPI) renderReport(ctx context.Context, p *profile.Profile, t
 	switch typ {
 	//nolint:staticcheck // SA1019: Fow now we want to support these APIs
 	case pb.QueryRequest_REPORT_TYPE_FLAMEGRAPH_UNSPECIFIED:
-		fg, err := GenerateFlamegraphFlat(ctx, q.tracer, p)
+		fg, err := GenerateFlamegraphFlat(ctx, tracer, p)
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to generate flamegraph: %v", err.Error())
 		}
@@ -200,7 +228,7 @@ func (q *ColumnQueryAPI) renderReport(ctx context.Context, p *profile.Profile, t
 			},
 		}, nil
 	case pb.QueryRequest_REPORT_TYPE_FLAMEGRAPH_TABLE:
-		fg, err := GenerateFlamegraphTable(ctx, q.tracer, p, nodeTrimFraction)
+		fg, err := GenerateFlamegraphTable(ctx, tracer, p, nodeTrimFraction)
 		if err != nil {
 			return nil, status.Errorf(codes.Internal, "failed to generate flamegraph: %v", err.Error())
 		}
